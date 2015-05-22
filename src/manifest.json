@@ -12,6 +12,7 @@
       "run_at": "document_end"
     }
   ],
+  "background": {},
   "permissions": [
     "https://mail.google.com/",
     "https://inbox.google.com/"
