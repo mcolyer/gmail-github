@@ -12,10 +12,16 @@
       "run_at": "document_end"
     }
   ],
-  "background": {},
+  "background": {
+    "scripts": ["background.js"]
+  },
   "permissions": [
     "https://mail.google.com/",
-    "https://inbox.google.com/"
+    "https://inbox.google.com/",
+    "https://github.com/"
+  ],
+  "web_accessible_resources": [
+    "images/*.png"
   ],
   "manifest_version": 2
 }

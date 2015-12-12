@@ -1,9 +1,33 @@
-InboxSDK.load('1', 'sdk_gh-experiment_b2c055d57d').then (sdk) ->
+InboxSDK.load('1.0', 'sdk_gh-experiment_b2c055d57d').then (sdk) ->
+  listUnsubscribeRe = /List-Unsubscribe: <(.*)>,\s*<(https:\/\/github.com\/notifications\/unsubscribe\/\w+)>/m
+  successUnwatchedRe = /You’ve been unsubscribed from the thread/
+  messageId = null
 
   sdk.Conversations.registerThreadViewHandler (threadView) ->
-    el = document.createElement("div")
-    el.innerHTML = "Hello World"
-    threadView.addSidebarContentPanel {
-      el: el,
-      title: "Hello World",
-    }
+    messageId = null
+    messageViews = threadView.getMessageViews()
+    return if messageViews.length == 0
+
+    messageView = messageViews[0]
+    messageId = messageView.getMessageID()
+
+  handle = sdk.Keyboard.createShortcutHandle(chord: "ctrl+e", description: "Unwatch this GitHub thread")
+  sdk.Toolbars.registerToolbarButtonForThreadView
+    title: "Unwatch"
+    section: sdk.Toolbars.SectionNames.METADATA_STATE
+    iconUrl: chrome.extension.getURL('images/archive.png')
+    keyboardShortcutHandle: handle
+    onClick: (e)->
+      if messageId
+        gmailUserId = GLOBALS[9]
+        url = "?ui=2&ik=#{gmailUserId}&view=om&th=#{messageId}"
+        saving = sdk.ButterBar.showSaving()
+        fetch(url, credentials: "include").then (response) ->
+          response.text().then (text) ->
+            if matches = listUnsubscribeRe.exec(text)
+              chrome.runtime.sendMessage {url: matches[2]}, (response) ->
+                if matches = successUnwatchedRe.exec(response.html)
+                  saving.resolve()
+                else
+                  saving.reject()
+                  sdk.ButterBar.showError(text: 'Something went wrong', time: 1000)

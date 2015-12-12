@@ -13,11 +13,13 @@ module.exports = (grunt) ->
 		copy:
 			dev:
 				files: [
-					{expand: true, cwd: 'dev/', src: '*.js', dest: 'ext/', filter: 'isFile'}
+					{expand: true, cwd: 'dev/', src: '*.js', dest: 'ext/', filter: 'isFile'},
+					{expand: true, cwd: 'dev/images/', src: '*.png', dest: 'ext/images', filter: 'isFile'}
 				]
 			src:
 				files: [
-					{expand: true, cwd: 'src/', src: '*.js', dest: 'ext/', filter: 'isFile'}
+					{expand: true, cwd: 'src/', src: '*.js', dest: 'ext/', filter: 'isFile'},
+					{expand: true, cwd: 'src/images/', src: '*.png', dest: 'ext/images/', filter: 'isFile'}
 				]
 		jade:
 			dev:
