@@ -31,3 +31,6 @@ InboxSDK.load('1.0', 'sdk_gh-experiment_b2c055d57d').then (sdk) ->
                 else
                   saving.reject()
                   sdk.ButterBar.showError(text: 'Something went wrong', time: 1000)
+            else
+              saving.reject()
+              sdk.ButterBar.showError(text: 'Not a GitHub thread', time: 1000)
