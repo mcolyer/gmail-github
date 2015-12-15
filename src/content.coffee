@@ -17,9 +17,9 @@ InboxSDK.load('1.0', 'sdk_gh-experiment_b2c055d57d').then (sdk) ->
     section: sdk.Toolbars.SectionNames.METADATA_STATE
     iconUrl: chrome.extension.getURL('images/archive.png')
     keyboardShortcutHandle: handle
-    onClick: (e)->
+    onClick: (e) ->
       if messageId
-        gmailUserId = GLOBALS[9]
+        gmailUserId = document.getElementsByTagName("head")[0].getAttribute("data-inboxsdk-ik-value")
         url = "?ui=2&ik=#{gmailUserId}&view=om&th=#{messageId}"
         saving = sdk.ButterBar.showSaving()
         fetch(url, credentials: "include").then (response) ->
