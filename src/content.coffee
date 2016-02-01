@@ -1,5 +1,5 @@
 InboxSDK.load('1.0', 'sdk_gh-experiment_b2c055d57d').then (sdk) ->
-  listUnsubscribeRe = /List-Unsubscribe: <(.*)>,\s*<(https:\/\/github.com\/notifications\/unsubscribe\/\w+)>/m
+  listUnsubscribeRe = /List-Unsubscribe: <(.*)>,\s*<(https:\/\/github.com\/notifications\/unsubscribe\/[\w\-]+)>/m
   successUnwatchedRe = /You’ve been unsubscribed from the thread/
   messageId = null
 
