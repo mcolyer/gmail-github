@@ -58,6 +58,16 @@ module.exports = (grunt) ->
 			"48": "icon48.png"
 			"128": "icon128.png"
 			
+		grunt.file.write 'ext/manifest.json', JSON.stringify(mnf)
+		
+	grunt.registerTask 'build:manifest-dev', 'Build chrome manifest file.', () ->
+		mnf = grunt.file.readJSON 'src/manifest.json'
+		
+		mnf.icons =
+			"16": "icon16.png"
+			"48": "icon48.png"
+			"128": "icon128.png"
+			
 		mnf.background?.scripts ?= []
 		mnf.background.scripts.push 'reload.js'
 		
@@ -66,6 +76,6 @@ module.exports = (grunt) ->
 	grunt.registerTask 'build:icons', ['image_resize:icon16', 'image_resize:icon48', 'image_resize:icon128']
 	grunt.registerTask 'build:sources', ['copy:src', 'jade:src', 'coffee:src']
 	grunt.registerTask 'build', ['build:manifest', 'build:icons', 'build:sources']
-	grunt.registerTask 'run', ['build:manifest', 'copy:dev', 'jade:dev', 'coffee:dev', 'build', 'watch']
+	grunt.registerTask 'run', ['build:manifest-dev', 'copy:dev', 'jade:dev', 'coffee:dev', 'build', 'watch']
 	grunt.registerTask 'default', ['build']
 	
