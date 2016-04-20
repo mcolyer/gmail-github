@@ -69,7 +69,6 @@ module.exports = (grunt) ->
 			"128": "icon128.png"
 			
 		mnf.background?.scripts ?= []
-		mnf.background.scripts.push 'reload.js'
 		
 		grunt.file.write 'ext/manifest.json', JSON.stringify(mnf)
 		
